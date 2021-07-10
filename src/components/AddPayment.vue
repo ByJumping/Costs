@@ -6,6 +6,7 @@
         <button @click="onClick">
             Добавить расходы +
         </button>
+
     </div>
 </template>
 
@@ -34,11 +35,22 @@ export default {
     },
     computed: {
         getCurrentDate() {
-            const today = new Date()
-            const d = today.getDate()
-            const m = today.getMonth() + 1
-            const y = today.getFullYear()
-            return `${d}.${m}.${y}`
+            // const today = new Date()
+            // const d = today.getDate()
+            // const m = today.getMonth() + 1
+            // const y = today.getFullYear()
+            // return `${d}.${m}.${y}`
+            let today = new Date()
+            let dd = today.getDate();
+            if (dd < 10) dd = '0' + dd;
+
+            let mm = today.getMonth() + 1;
+            if (mm < 10) mm = '0' + mm;
+
+            let yy = today.getFullYear() % 100;
+            if (yy < 10) yy = '0' + yy;
+
+            return dd + '.' + mm + '.' + yy;
         }
     }
 }

@@ -8,12 +8,15 @@
             <br>
             <PaymentsDisplay :list="paymentsList"></PaymentsDisplay>
         </main>
+        Общая стоимость: {{ getFPV }}
     </div>
 </template>
 <script>
 import PaymentsDisplay from "./components/PaymentsDisplay";
 // import AddPayment from "./components/AddPayment";
 import PopUp from "./components/PopUp";
+import { mapMutations, mapGetters, mapActions } from "vuex";
+// import CategorySelect from "./components/CategorySelect";
 
 // import HelloWorld from './components/HelloWorld.vue'
 // import Calc from "./components/Calc"
@@ -21,37 +24,59 @@ import PopUp from "./components/PopUp";
 export default {
     name: 'App',
     components: {PopUp, PaymentsDisplay},
-    data() {
-        return {
-            paymentsList: []
-        }
-    },
     methods: {
+        ...mapMutations([
+            'setPaymentListData',
+            'addDataToPaymentsList'
+        ]),
+        ...mapActions([
+            "fetchData",
+            "fetchCategory"
+        ]),
         addData(data) {
-            this.paymentsList.push(data)
+            this.addDataToPaymentsList(data)
+            // this.paymentsList.push(data)
         },
-        fetchData() {
-            return [
-                {
-                    date: '28.02.2020',
-                    category: 'Food',
-                    value: 169
-                },
-                {
-                    date: '20.04.2021',
-                    category: 'Sport',
-                    value: 400
-                },
-                {
-                    date: '28.05.2020',
-                    category: 'Internet',
-                    value: 200
-                }
-            ]
-        }
+        // fetchData() {
+        //     return [
+        //         {
+        //             date: '28.02.2020',
+        //             category: 'Food',
+        //             value: 169
+        //         },
+        //         {
+        //             date: '20.04.2021',
+        //             category: 'Sport',
+        //             value: 400
+        //         },
+        //         {
+        //             date: '28.05.2020',
+        //             category: 'Internet',
+        //             value: 200
+        //         }
+        //     ]
+        // }
+    },
+    computed: {
+        ...mapGetters({
+            paymentsList: 'getPaymentList',
+            category: 'getCategoryList'
+        }),
+        getFPV() {
+            return this.$store.getters.getFullPaymentValue
+        },
+        // paymentsList() {
+        //     return this.$store.getters.getPaymentList
+        // }
     },
     created() {
-        this.paymentsList = this.fetchData()
+        this.fetchData()
+        if(!this.category.length) {
+            this.fetchCategory()
+        }
+        // this.$store.dispatch('fetchData')
+        // this.setPaymentListData(this.fetchData())
+        // this.paymentsList = this.fetchData()
     }
 
 }

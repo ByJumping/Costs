@@ -8,6 +8,11 @@
         <div class="popup" v-show="popUpDisplay">
             <input class="popup_input" placeholder="date" type="date" v-model="date">
             <input class="popup_input" placeholder="category" v-model="category">
+<!--            <select class="popup_input" name="" id="" v-model="selected">-->
+<!--                <option value="" v-for="(option, idx) in category" :key="idx">-->
+<!--                    {{ option }}-->
+<!--                </option>-->
+<!--            </select>-->
             <input class="popup_input" placeholder="value" v-model.number="value" type="number">
             <button class="popUp-btn" @click="onClick">
                 Добавить
@@ -25,29 +30,42 @@ export default {
             category: '',
             value: 0,
             popUpDisplay: false,
+            selected: ''
         }
     },
     methods: {
+        getCurrentDate(date) {
+            date = new Date(date);
+            const d = ('0' + date.getDate()).slice(-2);
+            const m = ('0' + (date.getMonth() + 1)).slice(-2);
+            return `${d}.${m}.${date.getFullYear()}`
+        },
         onClick() {
             const { category, value } = this
+            // this.date = this.date.split('-').reverse().join('.')
             const data = {
 
-                date: this.date || this.getCurrentDate,
+                date: this.getCurrentDate(this.date || new Date()),
                 category,
                 value
             }
             this.$emit('addNewPayment', data)
-            console.log(data)
         },
     },
     computed: {
-        getCurrentDate() {
-            const today = new Date()
-            const d = today.getDate()
-            const m = today.getMonth() + 1
-            const y = today.getFullYear()
-            return `${d}.${m}.${y}`
-        }
+        // getCurrentDate() {
+        //     let today = new Date()
+        //     let dd = today.getDate();
+        //     if (dd < 10) dd = '0' + dd;
+        //
+        //     let mm = today.getMonth() + 1;
+        //     if (mm < 10) mm = '0' + mm;
+        //
+        //     let yy = today.getFullYear();
+        //     if (yy < 10) yy = '0' + yy;
+        //
+        //     return dd + '.' + mm + '.' + yy;
+        // }
     }
 }
 </script>
