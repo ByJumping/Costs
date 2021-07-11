@@ -8,11 +8,7 @@
         <div class="popup" v-show="popUpDisplay">
             <input class="popup_input" placeholder="date" type="date" v-model="date">
             <input class="popup_input" placeholder="category" v-model="category">
-<!--            <select class="popup_input" name="" id="" v-model="selected">-->
-<!--                <option value="" v-for="(option, idx) in category" :key="idx">-->
-<!--                    {{ option }}-->
-<!--                </option>-->
-<!--            </select>-->
+            <CategorySelect :category="category"/>
             <input class="popup_input" placeholder="value" v-model.number="value" type="number">
             <button class="popUp-btn" @click="onClick">
                 Добавить
@@ -22,8 +18,10 @@
 </template>
 
 <script>
+import CategorySelect from "./CategorySelect";
 export default {
     name: "PopUp",
+    components: {CategorySelect},
     data() {
         return {
             date: '',
