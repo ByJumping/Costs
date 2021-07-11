@@ -9,18 +9,18 @@
             <PaymentsDisplay :list="paymentsList"></PaymentsDisplay>
         </main>
         Общая стоимость: {{ getFPV }}
-        <CategorySelect :category="category"/>
+<!--        <CategorySelect :category="category"/>-->
     </div>
 </template>
 <script>
 import PaymentsDisplay from "./components/PaymentsDisplay";
 import PopUp from "./components/PopUp";
 import { mapMutations, mapGetters, mapActions } from "vuex";
-import CategorySelect from "./components/CategorySelect";
+// import CategorySelect from "./components/CategorySelect";
 
 export default {
     name: 'App',
-    components: {PopUp, PaymentsDisplay, CategorySelect},
+    components: {PopUp, PaymentsDisplay,},
     methods: {
         ...mapMutations([
             'setPaymentListData',
