@@ -8,8 +8,8 @@
         <div class="popup" v-show="popUpDisplay">
             <input class="popup_input" placeholder="date" type="date" v-model="date">
 <!--            <input class="popup_input" placeholder="category" v-model="category">-->
-            <select class="popup_input" name="" id="" v-model="selected">
-                <option value="" v-for="(option, idx) in category" :key="idx">
+            <select v-model="selected" class="popup_input popup_category" name="" id="">
+                <option v-for="(option, idx) in category" :key="idx">
                     {{ option }}
                 </option>
             </select>
@@ -33,7 +33,8 @@ export default {
             date: '',
             value: 0,
             popUpDisplay: false,
-            selected: ''
+            selected: '',
+            idx: ''
         }
     },
     methods: {
@@ -51,17 +52,20 @@ export default {
             return `${d}.${m}.${date.getFullYear()}`
         },
         onClick() {
-            const {category, value} = this
+            const {selected, value} = this
             // this.date = this.date.split('-').reverse().join('.')
             const data = {
 
                 date: this.getCurrentDate(this.date || new Date()),
-                category,
-                value
+                value,
+                selected
             }
-            console.log(this.category)
+            console.log(selected)
             this.$emit('addNewPayment', data)
         },
+        // getValue(idx) {
+        //     console.log(idx)
+        // }
     },
     computed: {
         ...mapGetters({
