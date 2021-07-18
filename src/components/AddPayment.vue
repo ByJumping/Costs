@@ -51,11 +51,23 @@ export default {
             if (yy < 10) yy = '0' + yy;
 
             return dd + '.' + mm + '.' + yy;
+        },
+        getValueQueryFromRoute() {
+            return Number(this.$route.query?.value) ?? null
+        },
+        getCategoryParamsFromRoute() {
+            return this.$route.params?.category ?? null
         }
+    },
+    created() {
+        if (!this.getValueQueryFromRoute || !this.getCategoryParamsFromRoute) {
+            this.$router.push({
+                name: 'dashboard'
+            })
+        }
+        this.category = this.getCategoryParamsFromRoute
+        this.value = this.getValueQueryFromRoute
     }
 }
 </script>
 
-<style scoped>
-
-</style>
