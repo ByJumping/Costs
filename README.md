@@ -1,4 +1,4 @@
-# costs
+# gb-vuejs
 
 ## Project setup
 ```
